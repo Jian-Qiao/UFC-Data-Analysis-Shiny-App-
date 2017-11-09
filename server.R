@@ -35,6 +35,7 @@ shinyServer(function(input,output){
   event_Data$Country=gsub('.*, ','',event_Data$Address)
   event_Country=event_Data %>% group_by(Country) %>% summarise(Events=sum(Times))
   event_Country=event_Country[order(event_Country$Events,decreasing=TRUE),]
+  Sys.sleep(0.3)
   g_event_country=gvisBarChart(event_Country,options=gvisOptions[-2])
   output$g_event_country=renderGvis(g_event_country)
   
@@ -61,6 +62,7 @@ shinyServer(function(input,output){
   #g_World
   
   plot_World=function(included){
+    Sys.sleep(0.3)
     g_World=gvisGeoChart(C_D[! C_D$Country %in% included,], locationvar="Country", 
                    colorvar="count",
                    options=gvisOptions[1:3])
@@ -74,6 +76,7 @@ shinyServer(function(input,output){
   Classes=Classes[order(Classes$Class),]
   Classes=Classes[is.na(Classes$Class)==FALSE,]
   #g_Classes=ggplot(Classes)+geom_bar(aes(x=Class,y=numbers),stat='identity')
+  Sys.sleep(0.3)
   g_Classes=gvisColumnChart(Classes,options=gvisOptions)
   output$g_Classes=renderGvis(g_Classes)
   #Plot ages
@@ -92,6 +95,7 @@ shinyServer(function(input,output){
   Fighting_Age=as.data.frame(unlist(Fights[,c('Fighter1_Age','Fighter2_Age')]))
   colnames(Fighting_Age)='Age'
   Fighting_Age=Fighting_Age %>% group_by(Age) %>% summarise(Count=n())
+  Sys.sleep(0.3)
   g_Age=gvisColumnChart(Fighting_Age,options=gvisOptions)
   output$g_Age=renderGvis(g_Age)
   summary(Fighting_Age)
@@ -164,6 +168,7 @@ shinyServer(function(input,output){
   #_Rate=g_Rate+theme(axis.ticks = element_blank())
   #_Rate=g_Rate+theme(axis.text = element_blank())
   
+  Sys.sleep(0.3)
   g_Rate=gvisGeoChart(Win_Rate_by_Country, locationvar="Country", 
                       colorvar="Win_Rate",
                       options=c(colors='["lawngreen","khaki","orangered"]',gvisOptions[1:3]))
@@ -172,6 +177,7 @@ shinyServer(function(input,output){
   
   #Matches Method
   Method=Fights %>% group_by(Method) %>% summarise(Count=n())
+  Sys.sleep(0.3)
   g_Method=gvisPieChart(Method,options=gvisOptions)
   output$g_Method=renderGvis(g_Method)
   #Winning Techniques.
@@ -182,6 +188,7 @@ shinyServer(function(input,output){
   #g_Method_by_Age=ggplot(data=Method_by_Age[Method_by_Age$Fighter1_Age>=20 & Method_by_Age$Fighter1_Age<=40,])+geom_area(aes(x=Fighter1_Age,y=Percentage,fill=Method, color=Method), position='stack', alpha=0.6, stat='identity')
   Method_by_Age=cast(Method_by_Age[,-3],Fighter1_Age~Method)
   Method_by_Age=Method_by_Age[Method_by_Age$Fighter1_Age>=20 & Method_by_Age$Fighter1_Age<=40,]
+  Sys.sleep(0.3)
   g_Method_by_Age=gvisAreaChart(Method_by_Age,options=c(isStacked=TRUE,gvisOptions))
   output$g_Method_Age=renderGvis(g_Method_by_Age)
   
@@ -196,6 +203,7 @@ shinyServer(function(input,output){
     
     temp=Fights[Fights$Method==Method,]%>%group_by(Method_D) %>% summarise(Count=n()) %>% mutate(pos=sum(Count)-(cumsum(Count)-Count/2))
     temp=temp[temp$Method_D!='',]
+    Sys.sleep(0.3)
     g_Technique=gvisPieChart(temp,options=c(title='Winning Technique',gvisOptions))
     return(g_Technique)
   }
@@ -242,6 +250,7 @@ shinyServer(function(input,output){
     per_Loss=Fights[Fights$Fighter2_id==id & Fights$Loss==1,]
     per_Loss$OutCome='Loss'
     Ratio=rbind(per_Win,per_Loss) %>% group_by(OutCome) %>% summarise(Count=n())
+    Sys.sleep(0.3)
     gvisPieChart(Ratio,options=c(title='Win-Rate',gvisOptions[-2]))
   })
   
@@ -250,6 +259,7 @@ shinyServer(function(input,output){
     per_Win=Fights[Fights$Fighter1_id==id & Fights$Win==1,]
     per_Win$OutCome='Win'
     per_Win=per_Win %>% group_by(Method) %>% summarise(Total=n())
+    Sys.sleep(0.3)
     gvisPieChart(per_Win,options=c(title='Wins',gvisOptions[-2]))
   })
   
@@ -258,6 +268,7 @@ shinyServer(function(input,output){
     per_Loss=Fights[Fights$Fighter2_id==id & Fights$Loss==1,]
     per_Loss$OutCome='Loss'
     per_Loss=per_Loss %>% group_by(Method) %>% summarise(Total=n())
+    Sys.sleep(0.3)
     gvisPieChart(per_Loss,options=c(title='Losses',gvisOptions[-2]))
   })
   output$Picture=renderUI({tags$img(src=Fighter_Exist(Given()),style='height:100%;width:100%')})
