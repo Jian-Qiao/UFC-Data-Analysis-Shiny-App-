@@ -6,32 +6,32 @@ shinyUI(fluidPage(theme=shinytheme('slate'),
   titlePanel("UFC Data Analysis"),
   
   hr(),
-  
+
   h2('What is UFC?'),
   p('The Ultimate Fighting Championship (UFC) is an American mixed martial arts promotion company, a subsidiary of the parent company William Morris Endeavor, based in Las Vegas, Nevada. It is the largest MMA promoter in the world and features most of the top-ranked fighters in the sport. Based in the United States, the UFC produces events worldwide that showcase ten weight divisions and abide by the Unified Rules of Mixed Martial Arts. The UFC has held over 300 events to date. Dana White serves as the president of the UFC.
   '),
   hr(),
   
-  tabsetPanel('Nagigator',
-              
+  tabsetPanel(
+
               tabPanel('Summary',
                        h2('Summary:'),
                        p(textOutput('summary')),
-                        
+
                        sidebarLayout(
                           sidebarPanel(
                           h3('Histroy Events:'),
                           p('From the map on the right side, we can see that UFC has held events all over the world in its history. However since UFC is a American based competition, it is very obvious that most of the events were held in the United States, especially in Las Vegas. Besides United States, Brazil held the second most events and Canada the third. You can zoom-in (out) to see how many events has been held at each specific stadium.'),
                           htmlOutput('g_event_country')
                           ),
-                      
+
                           mainPanel(
                             p(),
                             leafletOutput('Events')
                           )
-                            
+
                        ),
-                        
+
                         sidebarLayout(
                           sidebarPanel(
                             h3('Number of Fighters from Each Country:'),
@@ -56,7 +56,7 @@ shinyUI(fluidPage(theme=shinytheme('slate'),
                        )
 
                       ),
-              
+
                 tabPanel('Fighters',
                          sidebarLayout(
                            sidebarPanel(
@@ -68,7 +68,7 @@ shinyUI(fluidPage(theme=shinytheme('slate'),
                              htmlOutput('g_Classes')
                            )
                          ),
-                         
+
                          sidebarLayout(
                            sidebarPanel(
                              h3('Age Groups'),
@@ -78,7 +78,7 @@ shinyUI(fluidPage(theme=shinytheme('slate'),
                              htmlOutput('g_Age')
                            )
                          ),
-                         
+
                          sidebarLayout(
                            sidebarPanel(
                              h3('Win-Rate by Age'),
@@ -90,7 +90,7 @@ shinyUI(fluidPage(theme=shinytheme('slate'),
                            )
                          )
                       ),
-              
+
                 tabPanel('Fights',
                          sidebarLayout(
                            sidebarPanel(
@@ -111,7 +111,7 @@ shinyUI(fluidPage(theme=shinytheme('slate'),
                              htmlOutput('g_Method')
                            )
                          ),
-                         
+
                          sidebarLayout(
                            sidebarPanel(
                              h3('Winning Method by Age: '),
@@ -135,11 +135,11 @@ shinyUI(fluidPage(theme=shinytheme('slate'),
                            ),
                            mainPanel(
                              htmlOutput('g_Technique')
-                             
+
                            )
                          )
                       ),
-              
+
                 tabPanel('Fighter Search Wizzard',
                          verticalLayout(
                           dataTableOutput('Fighter_List')
@@ -163,14 +163,14 @@ shinyUI(fluidPage(theme=shinytheme('slate'),
                                    p(strong(em('Total Wins: ')),textOutput('Wins')),
                                    p(strong(em('Total Losses: ')),textOutput('Loss'))
                                    )),
-                               
+
                                div(style='width:30%;height:80%;float:left;margin-left:5%',
                                    htmlOutput('Win_Rate'),
                                    htmlOutput('WinPlot'),
                                    htmlOutput('LossPlot')
                                    )
                              )
-                             
+
                            )
                          )
                          )
